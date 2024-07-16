@@ -6,7 +6,8 @@ import seaborn as sns
 from PIL import Image
 import os
 import nbformat
-from nbconvert import PythonExporter
+from nbconvert import HTMLExporter
+import imgkit
 
 # Define the path to the image
 image_path = 'intro/_77f47b66-9794-484f-807e-56df65a48d68.jfif'
@@ -157,19 +158,23 @@ if page == "Modélisation serie temporelle":
             st.write("Contenu du fichier Jupyter Notebook:")
             st.code(notebook_content, language='json')
             
-            # Convert Jupyter Notebook to Python code
+            # Convert Jupyter Notebook to HTML
             try:
                 notebook = nbformat.reads(notebook_content, as_version=4)
-                exporter = PythonExporter()
-                python_code, _ = exporter.from_notebook_node(notebook)
-                st.write("Code Python converti:")
-                st.code(python_code, language='python')
+                html_exporter = HTMLExporter()
+                html_data, _ = html_exporter.from_notebook_node(notebook)
                 
-                # Execute the Python code safely
-                try:
-                    exec(python_code, {'st': st, 'pd': pd, 'np': np, 'plt': plt, 'sns': sns})
-                except Exception as e:
-                    st.error(f"Erreur lors de l'exécution du code Python converti: {e}")
+                # Save HTML to a temporary file
+                with open("temp_notebook.html", "w", encoding="utf-8") as f:
+                    f.write(html_data)
+                
+                # Convert HTML to image
+                imgkit.from_file("temp_notebook.html", "notebook_image.jpg")
+                
+                # Display the image
+                img = Image.open("notebook_image.jpg")
+                st.image(img, caption="Notebook Image", use_column_width=True)
+                
             except Exception as e:
                 st.error(f"Erreur lors de la conversion du fichier Jupyter Notebook: {e}")
         
