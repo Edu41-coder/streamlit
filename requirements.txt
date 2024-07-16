@@ -6,3 +6,4 @@ seaborn
 Pillow
 nbformat
 nbconvert
+imgkit
