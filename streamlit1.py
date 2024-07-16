@@ -6,8 +6,8 @@ import seaborn as sns
 from PIL import Image
 
 # Load and convert image
-img = Image.open('intro/_77f47b66-9794-484f-807e-56df65a48d68.jfif')
-img.save('intro/_77f47b66-9794-484f-807e-56df65a48d68.jpg', 'JPEG')
+img = Image.open('_77f47b66-9794-484f-807e-56df65a48d68.jfif')
+img.save('_77f47b66-9794-484f-807e-56df65a48d68.jpg', 'JPEG')
 
 st.title("Projet de prédiction de la gravité des accidents en France")
 st.sidebar.title("Sommaire")
