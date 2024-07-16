@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from PIL import Image
 import os
+import nbformat
+from nbconvert import PythonExporter
 
 # Define the path to the image
 image_path = 'intro/_77f47b66-9794-484f-807e-56df65a48d68.jfif'
@@ -108,7 +110,7 @@ if page == "Modélisation serie temporelle":
     st.write("### Modélisation serie temporelle")
     
     # Example: Upload a file
-    uploaded_file = st.file_uploader("Choisissez un fichier", type=["csv", "xlsx", "json", "py", "jpg", "jpeg", "png"])
+    uploaded_file = st.file_uploader("Choisissez un fichier", type=["csv", "xlsx", "json", "py", "jpg", "jpeg", "png", "ipynb"])
     if uploaded_file is not None:
         file_details = {"filename": uploaded_file.name, "filetype": uploaded_file.type, "filesize": uploaded_file.size}
         st.write(file_details)
@@ -147,6 +149,28 @@ if page == "Modélisation serie temporelle":
         elif uploaded_file.type in ["image/jpeg", "image/png"]:
             img = Image.open(uploaded_file)
             st.image(img, caption=uploaded_file.name, use_column_width=True)
+        
+        # Process Jupyter Notebook file
+        elif uploaded_file.type == "application/x-ipynb+json":
+            notebook_content = uploaded_file.read().decode("utf-8")
+            st.write("Contenu du fichier Jupyter Notebook:")
+            st.code(notebook_content, language='json')
+            
+            # Convert Jupyter Notebook to Python code
+            try:
+                notebook = nbformat.reads(notebook_content, as_version=4)
+                exporter = PythonExporter()
+                python_code, _ = exporter.from_notebook_node(notebook)
+                st.write("Code Python converti:")
+                st.code(python_code, language='python')
+                
+                # Execute the Python code safely
+                try:
+                    exec(python_code, {'st': st, 'pd': pd, 'np': np, 'plt': plt, 'sns': sns})
+                except Exception as e:
+                    st.error(f"Erreur lors de l'exécution du code Python converti: {e}")
+            except Exception as e:
+                st.error(f"Erreur lors de la conversion du fichier Jupyter Notebook: {e}")
         
         # Example: Plotting time series data
         st.write("### Visualisation des données temporelles")
