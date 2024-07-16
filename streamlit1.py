@@ -111,6 +111,7 @@ if page == "Modélisation serie temporelle":
     
     # Example: Upload a file
     uploaded_file = st.file_uploader("Choisissez un fichier", type=["csv", "xlsx", "json", "py", "jpg", "jpeg", "png", "ipynb"])
+    data = None  # Initialize data to None
     if uploaded_file is not None:
         file_details = {"filename": uploaded_file.name, "filetype": uploaded_file.type, "filesize": uploaded_file.size}
         st.write(file_details)
@@ -173,13 +174,14 @@ if page == "Modélisation serie temporelle":
                 st.error(f"Erreur lors de la conversion du fichier Jupyter Notebook: {e}")
         
         # Example: Plotting time series data
-        st.write("### Visualisation des données temporelles")
-        if 'date' in data.columns and 'value' in data.columns:
-            data['date'] = pd.to_datetime(data['date'])
-            data.set_index('date', inplace=True)
-            st.line_chart(data['value'])
-        else:
-            st.error("Le fichier doit contenir des colonnes 'date' et 'value'.")
+        if data is not None:
+            st.write("### Visualisation des données temporelles")
+            if 'date' in data.columns and 'value' in data.columns:
+                data['date'] = pd.to_datetime(data['date'])
+                data.set_index('date', inplace=True)
+                st.line_chart(data['value'])
+            else:
+                st.error("Le fichier doit contenir des colonnes 'date' et 'value'.")
 
     # Example: Add more features as needed
     # You can add more widgets, visualizations, and model training code here
