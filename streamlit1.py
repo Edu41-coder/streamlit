@@ -112,8 +112,8 @@ if page == "Modélisation serie temporelle":
     st.write("### Modélisation serie temporelle")
     
     # Define the GitHub repository and file paths
-    repo_url = "https://raw.githubusercontent.com/your-username/your-repo/main/intro/"
-    files = ["Exponential_smoothing-streamlit.ipynb", "Series_machine_3_models_streamlit.ipynb"]
+    repo_url = "https://raw.githubusercontent.com/Edu41-coder/streamlit/main/"
+    files = ["intro/Exponential_smoothing-streamlit.ipynb", "intro/Series_machine_3_models_streamlit.ipynb"]
     
     for file in files:
         file_url = repo_url + file
