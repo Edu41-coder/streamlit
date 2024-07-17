@@ -118,7 +118,7 @@ if page == "Modélisation serie temporelle":
         st.write(file_details)
         
         # Ensure the uploads directory exists
-        uploads_dir = os.path.abspath("uploads")
+        uploads_dir = "C:\\uploads"
         if not os.path.exists(uploads_dir):
             os.makedirs(uploads_dir)
         
@@ -215,7 +215,7 @@ if page == "Modélisation serie temporelle":
         
         # Example: Plotting time series data
         if data is not None:
-            st.write("### Visualisation des données temporelles")
+            st.write("### Visualisation des donn��es temporelles")
             if 'date' in data.columns and 'value' in data.columns:
                 data['date'] = pd.to_datetime(data['date'])
                 data.set_index('date', inplace=True)
