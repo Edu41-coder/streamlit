@@ -9,17 +9,19 @@ import nbformat
 from nbconvert import HTMLExporter
 import requests
 
-# Define the path to the image
+# Definir le path to the image
 image_path = 'intro/_77f47b66-9794-484f-807e-56df65a48d68.jfif'
 
-# Check if the image file exists
+# Verifier si le fichier image existe
 if os.path.exists(image_path):
-    # Load and convert image
+    # Charger et convertir image
     img = Image.open(image_path)
     img.save('intro/_77f47b66-9794-484f-807e-56df65a48d68.jpg', 'JPEG')
     st.image(img, use_column_width=True)
 else:
-    st.error(f"Image file not found: {image_path}")
+    st.error(f"fichier image pas trouve: {image_path}")
+
+# Maintenant, vous pouvez utiliser l'image convertie avec Streamlit
 
 st.title("Projet de prédiction de la gravité des accidents en France")
 st.sidebar.title("Sommaire")
