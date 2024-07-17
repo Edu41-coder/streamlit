@@ -9,19 +9,17 @@ import nbformat
 from nbconvert import HTMLExporter
 import requests
 
-# Definir le path to the image
+# Define the path to the image
 image_path = 'intro/_77f47b66-9794-484f-807e-56df65a48d68.jfif'
 
-# Verifier si le fichier image existe
+# Check if the image file exists
 if os.path.exists(image_path):
-    # Charger et convertir image
+    # Load and convert image
     img = Image.open(image_path)
     img.save('intro/_77f47b66-9794-484f-807e-56df65a48d68.jpg', 'JPEG')
     st.image(img, use_column_width=True)
 else:
-    st.error(f"fichier image pas trouve: {image_path}")
-
-# Maintenant, vous pouvez utiliser l'image convertie avec Streamlit
+    st.error(f"Image file not found: {image_path}")
 
 st.title("Projet de prédiction de la gravité des accidents en France")
 st.sidebar.title("Sommaire")
@@ -112,9 +110,9 @@ if page == "DataVizualization":
 if page == "Modélisation serie temporelle":
     st.write("### Modélisation serie temporelle")
     
-    # Definir the GitHub repo et file paths
+    # Define the GitHub repository and file paths
     repo_url = "https://raw.githubusercontent.com/Edu41-coder/streamlit/main/"
-    files = ["intro/Exponential_smoothing-streamlit.ipynb","intro/Dynamic_Factor_model.ipynb", "intro/Series_machine_3_models_streamlit.ipynb"]
+    files = ["intro/Exponential_smoothing-streamlit.ipynb", "intro/Dynamic_Factor_model.ipynb", "intro/Series_machine_3_models_streamlit.ipynb"]
     
     for file in files:
         file_url = repo_url + file
@@ -123,7 +121,7 @@ if page == "Modélisation serie temporelle":
         if response.status_code == 200:
             notebook_content = response.text
             
-            # Convertir Jupyter Notebook a HTML
+            # Convert Jupyter Notebook to HTML
             try:
                 notebook = nbformat.reads(notebook_content, as_version=4)
                 html_exporter = HTMLExporter()
@@ -138,4 +136,5 @@ if page == "Modélisation serie temporelle":
         else:
             st.error(f"Erreur lors du téléchargement du fichier {file} depuis GitHub: {response.status_code}")
 
-    
+    # Example: Add more features as needed
+    # You can add more widgets, visualizations, and model training code here
