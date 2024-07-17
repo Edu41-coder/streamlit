@@ -110,7 +110,7 @@ if page == "DataVizualization":
 if page == "Modélisation serie temporelle":
     st.write("### Modélisation serie temporelle")
     
-    # Define the GitHub repository and file paths
+    # Definir the GitHub repo et file paths
     repo_url = "https://raw.githubusercontent.com/Edu41-coder/streamlit/main/"
     files = ["intro/Exponential_smoothing-streamlit.ipynb", "intro/Series_machine_3_models_streamlit.ipynb"]
     
@@ -121,7 +121,7 @@ if page == "Modélisation serie temporelle":
         if response.status_code == 200:
             notebook_content = response.text
             
-            # Convert Jupyter Notebook to HTML
+            # Convertir Jupyter Notebook a HTML
             try:
                 notebook = nbformat.reads(notebook_content, as_version=4)
                 html_exporter = HTMLExporter()
@@ -136,5 +136,4 @@ if page == "Modélisation serie temporelle":
         else:
             st.error(f"Erreur lors du téléchargement du fichier {file} depuis GitHub: {response.status_code}")
 
-    # Example: Add more features as needed
-    # You can add more widgets, visualizations, and model training code here
+    
