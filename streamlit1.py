@@ -9,9 +9,17 @@ import nbformat
 from nbconvert import HTMLExporter
 import requests
 
-# Load and convert image
-img = Image.open('_77f47b66-9794-484f-807e-56df65a48d68.jfif')
-img.save('_77f47b66-9794-484f-807e-56df65a48d68.jpg', 'JPEG')
+# Define the path to the image
+image_path = 'intro/_77f47b66-9794-484f-807e-56df65a48d68.jfif'
+
+# Check if the image file exists
+if os.path.exists(image_path):
+    # Load and convert image
+    img = Image.open(image_path)
+    img.save('intro/_77f47b66-9794-484f-807e-56df65a48d68.jpg', 'JPEG')
+    st.image(img, use_column_width=True)
+else:
+    st.error(f"Image file not found: {image_path}")
 
 st.title("Projet de prédiction de la gravité des accidents en France")
 st.sidebar.title("Sommaire")
@@ -26,7 +34,7 @@ pages = [
 ]
 page = st.sidebar.radio("Aller vers", pages)
 
-if page == "Introduction":
+if page == "Introduction" and os.path.exists(image_path):
     st.image(img, use_column_width=True)
 
 # Information sur les auteurs
@@ -120,7 +128,7 @@ if page == "Modélisation serie temporelle":
                 html_data, _ = html_exporter.from_notebook_node(notebook)
                 
                 # Display HTML
-                st.write(f"### Contenu du fichier {file}:")
+                st.write(f"HTML du fichier {file}:")
                 st.components.v1.html(html_data, height=600, scrolling=True)
                 
             except Exception as e:
