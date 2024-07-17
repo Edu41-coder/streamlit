@@ -7,20 +7,11 @@ from PIL import Image
 import os
 import nbformat
 from nbconvert import HTMLExporter
-import imgkit
 import requests
 
-# Define the path to the image
-image_path = 'intro/_77f47b66-9794-484f-807e-56df65a48d68.jfif'
-
-# Check if the image file exists
-if os.path.exists(image_path):
-    # Load and convert image
-    img = Image.open(image_path)
-    img.save('intro/_77f47b66-9794-484f-807e-56df65a48d68.jpg', 'JPEG')
-    st.image(img, use_column_width=True)
-else:
-    st.error(f"Image file not found: {image_path}")
+# Load and convert image
+img = Image.open('_77f47b66-9794-484f-807e-56df65a48d68.jfif')
+img.save('_77f47b66-9794-484f-807e-56df65a48d68.jpg', 'JPEG')
 
 st.title("Projet de prédiction de la gravité des accidents en France")
 st.sidebar.title("Sommaire")
@@ -35,7 +26,7 @@ pages = [
 ]
 page = st.sidebar.radio("Aller vers", pages)
 
-if page == "Introduction" and os.path.exists(image_path):
+if page == "Introduction":
     st.image(img, use_column_width=True)
 
 # Information sur les auteurs
@@ -121,51 +112,19 @@ if page == "Modélisation serie temporelle":
         
         if response.status_code == 200:
             notebook_content = response.text
-            st.write(f"Contenu du fichier {file}:")
-            st.code(notebook_content, language='json')
             
-            # Add options for conversion
-            conversion_option = st.selectbox(
-                f"Choisissez une option de conversion pour {file}",
-                ("Afficher en HTML", "Convertir en image")
-            )
-            
-            if conversion_option == "Afficher en HTML":
-                # Convert Jupyter Notebook to HTML
-                try:
-                    notebook = nbformat.reads(notebook_content, as_version=4)
-                    html_exporter = HTMLExporter()
-                    html_data, _ = html_exporter.from_notebook_node(notebook)
-                    
-                    # Display HTML
-                    st.write(f"HTML du fichier {file}:")
-                    st.components.v1.html(html_data, height=600, scrolling=True)
-                    
-                except Exception as e:
-                    st.error(f"Erreur lors de la conversion du fichier {file} en HTML: {e}")
-            
-            elif conversion_option == "Convertir en image":
-                # Convert Jupyter Notebook to HTML and then to image
-                try:
-                    notebook = nbformat.reads(notebook_content, as_version=4)
-                    html_exporter = HTMLExporter()
-                    html_data, _ = html_exporter.from_notebook_node(notebook)
-                    
-                    # Save HTML to a temporary file
-                    temp_html_path = f"temp_{file}.html"
-                    with open(temp_html_path, "w", encoding="utf-8") as f:
-                        f.write(html_data)
-                    
-                    # Convert HTML to image
-                    img_path = f"{file}.jpg"
-                    imgkit.from_file(temp_html_path, img_path)
-                    
-                    # Display the image
-                    img = Image.open(img_path)
-                    st.image(img, caption=f"Notebook Image: {file}", use_column_width=True)
-                    
-                except Exception as e:
-                    st.error(f"Erreur lors de la conversion du fichier {file} en image: {e}")
+            # Convert Jupyter Notebook to HTML
+            try:
+                notebook = nbformat.reads(notebook_content, as_version=4)
+                html_exporter = HTMLExporter()
+                html_data, _ = html_exporter.from_notebook_node(notebook)
+                
+                # Display HTML
+                st.write(f"### Contenu du fichier {file}:")
+                st.components.v1.html(html_data, height=600, scrolling=True)
+                
+            except Exception as e:
+                st.error(f"Erreur lors de la conversion du fichier {file} en HTML: {e}")
         else:
             st.error(f"Erreur lors du téléchargement du fichier {file} depuis GitHub: {response.status_code}")
 
