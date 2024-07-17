@@ -8,6 +8,7 @@ import os
 import nbformat
 from nbconvert import HTMLExporter
 import imgkit
+import requests
 
 # Define the path to the image
 image_path = 'intro/_77f47b66-9794-484f-807e-56df65a48d68.jfif'
@@ -110,71 +111,22 @@ if page == "DataVizualization":
 if page == "Modélisation serie temporelle":
     st.write("### Modélisation serie temporelle")
     
-    # Example: Upload a file
-    uploaded_file = st.file_uploader("Choisissez un fichier", type=["csv", "xlsx", "json", "py", "jpg", "jpeg", "png", "ipynb"])
-    data = None  # Initialize data to None
-    if uploaded_file is not None:
-        file_details = {"filename": uploaded_file.name, "filetype": uploaded_file.type, "filesize": uploaded_file.size}
-        st.write(file_details)
+    # Define the GitHub repository and file paths
+    repo_url = "https://raw.githubusercontent.com/your-username/your-repo/main/intro/"
+    files = ["Exponential_smoothing-streamlit.ipynb", "Series_machine_3_models_streamlit.ipynb"]
+    
+    for file in files:
+        file_url = repo_url + file
+        response = requests.get(file_url)
         
-        # Ensure the uploads directory exists
-        uploads_dir = "C:\\uploads"
-        if not os.path.exists(uploads_dir):
-            os.makedirs(uploads_dir)
-        
-        # Save the uploaded file to disk
-        file_path = os.path.join(uploads_dir, uploaded_file.name)
-        with open(file_path, "wb") as f:
-            f.write(uploaded_file.getbuffer())
-        
-        st.success(f"File saved to {file_path}")
-        
-        # Process CSV file
-        if uploaded_file.type == "text/csv":
-            data = pd.read_csv(file_path)
-            st.write("Aperçu des données CSV:")
-            st.write(data.head())
-        
-        # Process Excel file
-        elif uploaded_file.type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
-            data = pd.read_excel(file_path)
-            st.write("Aperçu des données Excel:")
-            st.write(data.head())
-        
-        # Process JSON file
-        elif uploaded_file.type == "application/json":
-            data = pd.read_json(file_path)
-            st.write("Aperçu des données JSON:")
-            st.write(data.head())
-        
-        # Process Python file
-        elif uploaded_file.type == "text/x-python":
-            with open(file_path, "r") as f:
-                code = f.read()
-            st.write("Contenu du fichier Python:")
-            st.code(code, language='python')
-            
-            # Execute the Python code safely
-            try:
-                exec(code, {'st': st, 'pd': pd, 'np': np, 'plt': plt, 'sns': sns})
-            except Exception as e:
-                st.error(f"Erreur lors de l'exécution du code Python: {e}")
-        
-        # Process Image file
-        elif uploaded_file.type in ["image/jpeg", "image/png"]:
-            img = Image.open(file_path)
-            st.image(img, caption=uploaded_file.name, use_column_width=True)
-        
-        # Process Jupyter Notebook file
-        elif uploaded_file.type == "application/x-ipynb+json":
-            with open(file_path, "r") as f:
-                notebook_content = f.read()
-            st.write("Contenu du fichier Jupyter Notebook:")
+        if response.status_code == 200:
+            notebook_content = response.text
+            st.write(f"Contenu du fichier {file}:")
             st.code(notebook_content, language='json')
             
             # Add options for conversion
             conversion_option = st.selectbox(
-                "Choisissez une option de conversion",
+                f"Choisissez une option de conversion pour {file}",
                 ("Afficher en HTML", "Convertir en image")
             )
             
@@ -186,11 +138,11 @@ if page == "Modélisation serie temporelle":
                     html_data, _ = html_exporter.from_notebook_node(notebook)
                     
                     # Display HTML
-                    st.write("HTML du fichier Jupyter Notebook:")
+                    st.write(f"HTML du fichier {file}:")
                     st.components.v1.html(html_data, height=600, scrolling=True)
                     
                 except Exception as e:
-                    st.error(f"Erreur lors de la conversion du fichier Jupyter Notebook en HTML: {e}")
+                    st.error(f"Erreur lors de la conversion du fichier {file} en HTML: {e}")
             
             elif conversion_option == "Convertir en image":
                 # Convert Jupyter Notebook to HTML and then to image
@@ -200,28 +152,22 @@ if page == "Modélisation serie temporelle":
                     html_data, _ = html_exporter.from_notebook_node(notebook)
                     
                     # Save HTML to a temporary file
-                    with open("temp_notebook.html", "w", encoding="utf-8") as f:
+                    temp_html_path = f"temp_{file}.html"
+                    with open(temp_html_path, "w", encoding="utf-8") as f:
                         f.write(html_data)
                     
                     # Convert HTML to image
-                    imgkit.from_file("temp_notebook.html", "notebook_image.jpg")
+                    img_path = f"{file}.jpg"
+                    imgkit.from_file(temp_html_path, img_path)
                     
                     # Display the image
-                    img = Image.open("notebook_image.jpg")
-                    st.image(img, caption="Notebook Image", use_column_width=True)
+                    img = Image.open(img_path)
+                    st.image(img, caption=f"Notebook Image: {file}", use_column_width=True)
                     
                 except Exception as e:
-                    st.error(f"Erreur lors de la conversion du fichier Jupyter Notebook en image: {e}")
-        
-        # Example: Plotting time series data
-        if data is not None:
-            st.write("### Visualisation des donn��es temporelles")
-            if 'date' in data.columns and 'value' in data.columns:
-                data['date'] = pd.to_datetime(data['date'])
-                data.set_index('date', inplace=True)
-                st.line_chart(data['value'])
-            else:
-                st.error("Le fichier doit contenir des colonnes 'date' et 'value'.")
+                    st.error(f"Erreur lors de la conversion du fichier {file} en image: {e}")
+        else:
+            st.error(f"Erreur lors du téléchargement du fichier {file} depuis GitHub: {response.status_code}")
 
     # Example: Add more features as needed
     # You can add more widgets, visualizations, and model training code here
