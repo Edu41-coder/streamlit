@@ -117,27 +117,40 @@ if page == "Modélisation serie temporelle":
         file_details = {"filename": uploaded_file.name, "filetype": uploaded_file.type, "filesize": uploaded_file.size}
         st.write(file_details)
         
+        # Ensure the uploads directory exists
+        uploads_dir = os.path.abspath("uploads")
+        if not os.path.exists(uploads_dir):
+            os.makedirs(uploads_dir)
+        
+        # Save the uploaded file to disk
+        file_path = os.path.join(uploads_dir, uploaded_file.name)
+        with open(file_path, "wb") as f:
+            f.write(uploaded_file.getbuffer())
+        
+        st.success(f"File saved to {file_path}")
+        
         # Process CSV file
         if uploaded_file.type == "text/csv":
-            data = pd.read_csv(uploaded_file)
+            data = pd.read_csv(file_path)
             st.write("Aperçu des données CSV:")
             st.write(data.head())
         
         # Process Excel file
         elif uploaded_file.type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
-            data = pd.read_excel(uploaded_file)
+            data = pd.read_excel(file_path)
             st.write("Aperçu des données Excel:")
             st.write(data.head())
         
         # Process JSON file
         elif uploaded_file.type == "application/json":
-            data = pd.read_json(uploaded_file)
+            data = pd.read_json(file_path)
             st.write("Aperçu des données JSON:")
             st.write(data.head())
         
         # Process Python file
         elif uploaded_file.type == "text/x-python":
-            code = uploaded_file.read().decode("utf-8")
+            with open(file_path, "r") as f:
+                code = f.read()
             st.write("Contenu du fichier Python:")
             st.code(code, language='python')
             
@@ -149,12 +162,13 @@ if page == "Modélisation serie temporelle":
         
         # Process Image file
         elif uploaded_file.type in ["image/jpeg", "image/png"]:
-            img = Image.open(uploaded_file)
+            img = Image.open(file_path)
             st.image(img, caption=uploaded_file.name, use_column_width=True)
         
         # Process Jupyter Notebook file
         elif uploaded_file.type == "application/x-ipynb+json":
-            notebook_content = uploaded_file.read().decode("utf-8")
+            with open(file_path, "r") as f:
+                notebook_content = f.read()
             st.write("Contenu du fichier Jupyter Notebook:")
             st.code(notebook_content, language='json')
             
