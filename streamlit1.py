@@ -136,5 +136,4 @@ if page == "Modélisation serie temporelle":
         else:
             st.error(f"Erreur lors du téléchargement du fichier {file} depuis GitHub: {response.status_code}")
 
-    # Example: Add more features as needed
-    # You can add more widgets, visualizations, and model training code here
+   
