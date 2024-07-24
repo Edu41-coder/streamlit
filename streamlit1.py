@@ -151,8 +151,7 @@ L'objectif principal est de démontrer comment préparer des séries temporelles
         # Ajout des images pour le modèle Random Forest
         st.image('intro/display_ser_morts.PNG')
         st.image('intro/display_serie_accs.PNG')
-        st.image('intro/importance_accidents.png')
-        st.image('intro/importance_morts.png')
+        st.markdown(f"Serie morts")
         st.image('intro/serie_morts.PNG')
         st.image('intro/serie_morts_log.png')
         st.image('intro/serie_accs_log.png')
