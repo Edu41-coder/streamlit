@@ -262,7 +262,7 @@ MAPE: 62.24171883224996% """)
         st.markdown(""" Conclusion
 RMSE et MAE : Les valeurs de RMSE (4746.55) et de MAE (4637.19) montrent que les prévisions du modèle ont une erreur moyenne très élevée en termes d'unités. Cela suggère que le modèle a des difficultés à prédire avec précision les valeurs futures de Num_Acc.
 MAPE : Une valeur de MAPE de 62.24% est extrêmement élevée, indiquant que les prévisions du modèle s'écartent en moyenne de 62.24% des valeurs réelles. Cela montre que le modèle est très imprécis dans ses prévisions futures pour Num_Acc.""")
-        st.image('intro/24.PNG')
+        st.image('intro/24.png')
         st.markdown("""Performance des prévisions futures pour Nb_morts:
 RMSE: 33.19408773227458
 MAE: 28.697980673615156
