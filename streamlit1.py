@@ -251,10 +251,10 @@ Pour évaluer la performance du modèle de facteur dynamique, nous utiliserons l
 RMSE (Root Mean Squared Error) : Mesure la racine carrée de la moyenne des carrés des erreurs. Plus la valeur est faible, meilleure est la performance du modèle.
 MAE (Mean Absolute Error) : Mesure la moyenne des erreurs absolues. Plus la valeur est faible, meilleure est la performance du modèle.
 MAPE (Mean Absolute Percentage Error) : Mesure la moyenne des erreurs absolues en pourcentage. Plus la valeur est faible, meilleure est la performance du modèle.""")
-        st.image('intro/20.PNG')
-        st.image('intro/21.PNG')
-        st.image('intro/22.PNG')
-        st.image('intro/23.PNG')
+        st.image('intro/20.png')
+        st.image('intro/21.png')
+        st.image('intro/22.png')
+        st.image('intro/23.png')
         st.markdown("""Performance des prévisions futures pour Num_Acc:
 RMSE: 4746.545180705458
 MAE: 4637.18697714195
@@ -284,8 +284,8 @@ Dans ce notebook, nous explorons l'utilisation de la méthode de lissage exponen
 -Application du Modèle de Lissage Exponentiel : Utiliser la bibliothèque statsmodels pour appliquer le modèle de lissage exponentiel aux données. Ajuster le modèle pour capturer les tendances et les variations saisonnières.
 -Prévision des Valeurs Futures : Utiliser le modèle ajusté pour prévoir les valeurs futures des séries temporelles. Visualiser les prévisions et les comparer aux valeurs historiques. 
 -Évaluation du Modèle : Évaluer la performance du modèle en utilisant des métriques de prévision appropriées. Comparer les prévisions du modèle avec les valeurs réelles pour évaluer sa précision.""")
-        st.image('intro/30.PNG')
-        st.image('intro/31.PNG')
+        st.image('intro/30.png')
+        st.image('intro/31.png')
         st.markdown("""RMSE: 540.5057127870764
 MAE: 409.9942478529423
 MAPE: 4.871960973925667%""")
@@ -293,7 +293,7 @@ MAPE: 4.871960973925667%""")
 RMSE et MAE : Les valeurs de RMSE (540.51) et de MAE (409.99) montrent que les prédictions du modèle ont une erreur moyenne relativement élevée en termes d'unités. Cela suggère qu'il pourrait y avoir des améliorations possibles pour réduire ces erreurs.
 MAPE : Une valeur de MAPE de 4.87% est assez bonne, indiquant que les prédictions du modèle sont en moyenne à moins de 5% des valeurs réelles. Cela montre que le modèle est relativement précis en termes de pourcentage.
 En résumé, bien que les erreurs absolues (RMSE et MAE) soient relativement élevées, le faible MAPE indique que le modèle de lissage exponentiel est assez précis en termes de pourcentage. Cependant, il pourrait être utile d'explorer d'autres modèles ou d'ajuster les paramètres du modèle actuel pour améliorer encore la précision des prédictions.""")
-        st.image('intro/32.PNG')
+        st.image('intro/32.png')
         st.markdown("""RMSE: 22.186295667391015
 MAE: 16.778081056804858
 MAPE: 12.525307483322242%""")
