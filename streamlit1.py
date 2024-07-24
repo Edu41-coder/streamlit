@@ -120,6 +120,34 @@ if page == "Modélisation serie temporelle":
     
     if model_choice == "Modèle Random Forest":
         st.write("Vous avez sélectionné le Modèle Random Forest.")
+        st.markdown(""" # Analyse des Séries Temporelles et Modélisation avec RandomForest
+
+Ce notebook présente une analyse des séries temporelles de deux jeux de données : les décès (`serie_morts`) et les accidents (`serie_accs`). L'objectif est de transformer ces séries pour les rendre stationnaires, puis d'utiliser un modèle de régression RandomForest pour prédire les valeurs futures.
+
+## Étapes du Notebook
+
+1. **Importation des Bibliothèques** : Chargement des bibliothèques nécessaires pour l'analyse et la modélisation.
+2. **Chargement des Données** : Importation des séries temporelles depuis des fichiers CSV.
+3. **Prétraitement des Données** : Transformation des séries pour les rendre stationnaires, y compris la différenciation et la transformation logarithmique.
+4. **Visualisation des Données** : Affichage des séries temporelles et de leurs transformations.
+5. **Tests de Stationnarité** : Utilisation du test de Dickey-Fuller augmenté pour vérifier la stationnarité des séries.
+6. **Préparation des Données pour la Modélisation** : Division des données en ensembles d'entraînement et de test, et normalisation des données.
+7. **Entraînement et Évaluation des Modèles** : Entraînement du modèle RandomForest et évaluation de ses performances à l'aide de métriques telles que RMSE, MAPE et MASE.
+8. **Analyse des Résultats** : Affichage des résultats et des importances des variables pour les deux jeux de données.
+
+## Objectif
+
+L'objectif principal est de démontrer comment préparer des séries temporelles pour la modélisation, entraîner un modèle de régression RandomForest, et évaluer ses performances. Ce notebook peut servir de guide pour des analyses similaires sur d'autres séries temporelles.
+
+## Prérequis
+
+- Python 3.x
+- Bibliothèques : pandas, numpy, matplotlib, seaborn, statsmodels, scikit-learn, sktime
+
+
+---
+
+""")
         # Ajout des images pour le modèle Random Forest
         st.image('intro/display_ser_morts.PNG')
         st.image('intro/display_serie_accs.PNG')
